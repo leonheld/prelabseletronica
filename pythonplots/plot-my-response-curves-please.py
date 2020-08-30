@@ -12,8 +12,8 @@ integrador_com_perdas_phase = list()
 integrador_com_perdas_mag = list()
 
 for i in range(len(freq)):
-    integrador_com_perdas_mag.append(20 * math.log10( 10 * 1 /(math.sqrt(math.pow((2 * math.pi), 2) * math.pow(freq[i], 2) * math.pow(6.8E-9, 2) * math.pow(100E3, 2) + 1))))
-    integrador_com_perdas_phase.append(math.degrees(math.pi - math.atan((2.0 * math.pi * freq[i] * 100E3 * 6.8E-9))))
+    integrador_com_perdas_mag.append("{:.2f}".format(20 * math.log10( 10 * 1 /(math.sqrt(math.pow((2 * math.pi), 2) * math.pow(freq[i], 2) * math.pow(6.8E-9, 2) * math.pow(100E3, 2) + 1)))))
+    integrador_com_perdas_phase.append("{:.2f}".format(math.degrees(math.pi - math.atan((2.0 * math.pi * freq[i] * 100E3 * 6.8E-9)))))
 
 plt.rcParams['text.usetex'] = True
 plt.rcParams['text.latex.preamble'] = [
@@ -30,6 +30,7 @@ plt.xscale('log')
 plt.xlabel('Frequência $f$ [Hz]', fontsize = 14)
 #plt.ylabel('Ganho $\mathfrak{G}(j\omega)$ [dB]', fontsize = 14)
 plt.ylabel('Fase $\phi(f)$ [Graus]', fontsize = 14)
+plt.gca().invert_yaxis() #matplotlib sucks
 
 for xy in zip(freq, integrador_com_perdas_phase):
     plt.annotate('(%s, %s)' % xy, xy = xy, textcoords = 'data') 
@@ -39,6 +40,5 @@ plt.suptitle('Integrador com perdas', fontsize = 20)
 manager = plt.get_current_fig_manager()
 manager.resize(*manager.window.maxsize())
 
-plt.savefig("intperdasfase.pdf", dpi = 100)
-
 plt.show()
+
